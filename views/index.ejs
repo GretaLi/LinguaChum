@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 小工具</title>
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body class="body">
+    <form action="/" method="post" class="" id="chat-form">
+      <div class="chat-container">
+        <nav class="chat-sidebar active">
+          <!-- Sidebar content (user list, settings, etc.) -->
+          <a href="#" class="chat-add">
+            <span class="material-symbols-rounded"> add </span>
+            新增對話
+          </a>
+
+          <div class="chat-tabs">
+            <h4 class="chat-date"><small>Today</small></h4>
+            <a href="#" class="chat-tab active"
+              ><span class="material-symbols-rounded"> chat_bubble </span>
+              學習法文日常對話
+              <span class="material-symbols-rounded chat--tab-delete"
+                >delete</span
+              >
+            </a>
+            <a href="#" class="chat-tab"
+              ><span class="material-symbols-rounded"> chat_bubble </span>
+              學習法文星期說法
+              <span class="material-symbols-rounded chat--tab-delete"
+                >delete</span
+              >
+            </a>
+            <h4 class="chat-date"><small>Yesterday</small></h4>
+            <a href="#" class="chat-tab"
+              ><span class="material-symbols-rounded"> chat_bubble </span>
+              學習法文問候語
+              <span class="material-symbols-rounded chat--tab-delete"
+                >delete</span
+              >
+            </a>
+          </div>
+
+          <div class="chat-user">
+            <div>
+              <div class="chat-user--img">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/180px-ChatGPT_logo.svg.png"
+                  alt="Avatar"
+                />
+              </div>
+              <div>
+                <h4 class="chat-user--name">Greta Li</h4>
+                <p class="chat-user--id">@gretali.frontend</p>
+              </div>
+              <div class="chat-user--tag">Free</div>
+            </div>
+            <a href="#" class="chat-user--cta">Upgrade to Pro</a>
+          </div>
+          <input
+            type="checkbox"
+            name="chat-sidebar--close"
+            id="chat-sidebar--close"
+            checked
+          />
+          <label
+            for="chat-sidebar--close"
+            class="chat-sidebar--close material-symbols-outlined"
+          >
+            &#xe5d2;
+          </label>
+        </nav>
+        <div class="chat-main">
+          <div class="chat-header">
+            <span></span>
+            <h2>語言學習導師 (❁´◡`❁)</h2>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/180px-ChatGPT_logo.svg.png"
+              alt="語言學習導師"
+            />
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <!-- Messages go here -->
+            <!-- prettier-ignore -->
+            <% for (const [index, message] of messages.entries()) { %>
+            <% if (index && message.role === "assistant") { %>
+            <md-block class="message incoming"><%= message.content %></md-block>
+            <% } else if (index && message.role === "user") { %>
+            <md-block class="message outgoing"><%= message.content %></md-block>
+            <% } %> <% } %>
+          </div>
+          <div class="chat-input">
+            <input
+              type="text"
+              name="description"
+              id="message-input"
+              class="message-input"
+              placeholder="Enter your message"
+            />
+            <button
+              type="submit"
+              class="send-button material-symbols-rounded"
+              id="send-button"
+              onclick="validateForm()"
+            >
+              send
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script>
+      function validateForm() {
+        const messageInput = document.getElementById("message-input");
+        const sendButton = document.getElementById("send-button");
+
+        if (messageInput.value.trim() === "") {
+          sendButton.disabled = true;
+        } else {
+          sendButton.disabled = false;
+        }
+      }
+
+      const messagesDiv = document.getElementById("chat-messages");
+      scrollToBottom();
+      function scrollToBottom() {
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      const sidebarToggle = document.querySelector("input#chat-sidebar--close");
+      sidebarToggle.addEventListener("change", (e) => {
+        if (e.target.checked) {
+          document.querySelector("label.chat-sidebar--close").innerHTML =
+            "&#xe5d2;";
+        } else {
+          document.querySelector("label.chat-sidebar--close").innerHTML =
+            "&#xe9bd;";
+        }
+      });
+    </script>
+  </body>
+</html>
